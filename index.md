@@ -2,4 +2,7 @@
 layout: default
 ---
 
-## Everything that we've got to do...
+## The perfect recipe for the perfect cookie
+
+* [Everything we've got to do](todo)
+* [What's shakin' bakin](progress)
