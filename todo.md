@@ -1,1 +1,11 @@
 ## All the ingredients
+- [ ] Linkers and Loaders
+- [ ] [What Every Programmer Should Know about Memory](https://www.akkadia.org/drepper/cpumemory.pdf)
+- [ ] [Containers from Scratch](https://ericchiang.github.io/post/containers-from-scratch/)
+- [ ] [Build Yourself a Linux](https://github.com/MichielDerhaeg/build-linux)
+- [ ] [Linux x86 Program Start Up](http://dbp-consulting.com/tutorials/debugging/linuxProgramStartup.html)
+- [ ] [Distributed Systems for Fun and Profit](http://book.mixu.net/distsys/single-page.html)
+- [ ] [Linux-insides](https://0xax.gitbooks.io/linux-insides/content/)
+- [ ] [Gustavo's mysteriously good blog posts about how computers and Linux works](http://duartes.org/gustavo/blog/category/internals/)
+- [ ] [The TTY demystified](http://www.linusakesson.net/programming/tty/)
+- [ ] [Memory Layout in Program Execution](http://fgiasson.com/articles/memorylayout.txt)
