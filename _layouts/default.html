@@ -22,7 +22,7 @@
       </header>
       <section>
 
-      {{ content }}
+      {{ content | replace: '<li>[ ]', '<li class = "box">' | replace: '<li>[x]', '<li class = "box_done">'  }}
 
       </section>
       <footer>
