@@ -1,4 +1,8 @@
 // styles for checkbox
+ ol {
+    list-style-type: none;
+ }
+
 .box,
 .box_done,
 .task-list-item {
