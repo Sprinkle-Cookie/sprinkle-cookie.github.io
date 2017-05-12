@@ -22,9 +22,9 @@
       </header>
       <section>
 
-          {{ content | replace: '<li>[ ]', '<input type="checkbox" ><br/>' |
-                    replace: '<li>[x]', '<input type="checkbox"
-                                                value="on" checked><br/>'  }}
+          {{ content | replace: '<li>[ ]', '<br/><input type="checkbox" >' |
+              replace: '<li>[x]', '<br/><input type="checkbox"
+                                                value="on" checked>'  }}
 
       </section>
       <footer>
