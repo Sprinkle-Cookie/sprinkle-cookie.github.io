@@ -6,7 +6,6 @@
 ---
 
 ### Arch Linux setup notes
-
 > TODO: Add links to docs
 
 - Current development environment:
@@ -37,5 +36,7 @@
 
 
 *Nandaja*
+
+*May 11, 2017*
 
 ---
