@@ -1,6 +1,10 @@
 ## What's shakin' bakin'?
 
 
+
+
+---
+
 ### Arch Linux setup notes
 
 > TODO: Add links to docs
@@ -31,6 +35,7 @@
 - To use a new font for i3 or uxrvt in general you'll have to install ttf-<font name> package. I haven't yet figured out how to increase the size of the text in uxrvt. I am clearly missing something.
 
 
-* Nandaja *
+
+*Nandaja*
 
 ---
