@@ -33,12 +33,20 @@
 - To mount iphone in arch(for file backup and what not) use [this reddit thread](https://www.reddit.com/r/archlinux/comments/3l2gvo/eli5_how_to_mount_my_iphone_in_arch/)
 - Getting a wireless printers working: Packages installed were cups, cups-pdf, avahi, and its dependencies. Once installed start and enable avahi-daemon.service and  org.cups.cupsd.service. Use the web interface at localhost:641 and add a printer and what not. I was using the cups cli and had difficulty connecting to the printer. lpinfo -v lists all the available printers and lpinfo -m lists the drivers.
 
-_ Things yet to figure out
+- Things yet to figure out(Edit: Not anymore. Refer the updates below)
     - To use a new font for i3 or uxrvt in general you'll have to install ttf-<font name> package. I haven't yet figured out how to increase the size of the text in uxrvt. I am clearly missing something.
     - For some reason I can't set my cursor to be a vertical line or
       block on vim. This combined with the issue mentioned above make it extremely  difficult to understand where my cursor is at the moment.
 
+**Update**: So magically today urxvt stopped the strike and decided to
+present itself in my favorite terminal font(FYI, Inconsolata). Also, my
+vim now has a bright red blinking vertical cursor block! I don't know
+what I right or wrong for this to happen. I remember changing the line
+Uxrvt\*CursorLine from ~/.Xresources. Was that the culprit all along?
+Frustrating are the ones that cannot be understood. Sigh...
 
+
+*I am finally content with my working environment. With that I conclude my Arch setup notes. This was fun.*
 
 
 *Nandaja*
