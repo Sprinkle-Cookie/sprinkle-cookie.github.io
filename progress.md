@@ -32,6 +32,7 @@
 - Getting sound system to work: This was a bit tricky mostly because of the confusing documentation.  You need a hardware support and then a usermod application(sound server). The most widely used hardware support is alsa. Packages needed are: alsa, alsa-utils, and alsa-plugins. Once downloaded, you will have to unmute the sound card's Master volume. This one did not work for me for a very long time. Turned out I was trying to turn the wrong sound card on. Specify -c 2 when you run the sset command to unmute. Otherwise just use alsamixer, switch the sounds cards and manually increase the volume. Looks like I will have to do this everytime I switch from speaker to headphone. Also, I used a script to amplify the alsa volume. Make sure you add the user to audio and video groups.
 - To mount iphone in arch(for file backup and what not) use [this reddit thread](https://www.reddit.com/r/archlinux/comments/3l2gvo/eli5_how_to_mount_my_iphone_in_arch/)
 - Getting a wireless printers working: Packages installed were cups, cups-pdf, avahi, and its dependencies. Once installed start and enable avahi-daemon.service and  org.cups.cupsd.service. Use the web interface at localhost:641 and add a printer and what not. I was using the cups cli and had difficulty connecting to the printer. lpinfo -v lists all the available printers and lpinfo -m lists the drivers.
+- To take screenshots, I installed gscreenshot which is a wrapper around scrot. I mapped gscreenshot-cli to the key binding Mod1+Shift+s in my i3 config. Works like a charm.
 
 - Things yet to figure out(Edit: Not anymore. Refer the updates below)
     - To use a new font for i3 or uxrvt in general you'll have to install ttf-<font name> package. I haven't yet figured out how to increase the size of the text in uxrvt. I am clearly missing something.
@@ -40,10 +41,10 @@
 
 **Update**: So magically today urxvt stopped the strike and decided to
 present itself in my favorite terminal font(FYI, Inconsolata). Also, my
-vim now has a bright red blinking vertical cursor block! I don't know
-what I right or wrong for this to happen. I remember changing the line
-Uxrvt\*CursorLine from ~/.Xresources. Was that the culprit all along?
-Frustrating are the ones that cannot be understood. Sigh...
+vim now has a bright red blinking vertical cursor block! All I had to do
+was to create a ~/.Xdefaults file with content the same as that of
+~/.Xresources. So weird... I thought either of these files would do the
+trick.
 
 
 *I am finally content with my working environment. With that I conclude my Arch setup notes. This was fun.*
