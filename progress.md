@@ -33,6 +33,14 @@
 - To mount iphone in arch(for file backup and what not) use [this reddit thread](https://www.reddit.com/r/archlinux/comments/3l2gvo/eli5_how_to_mount_my_iphone_in_arch/)
 - Getting a wireless printers working: Packages installed were cups, cups-pdf, avahi, and its dependencies. Once installed start and enable avahi-daemon.service and  org.cups.cupsd.service. Use the web interface at localhost:641 and add a printer and what not. I was using the cups cli and had difficulty connecting to the printer. lpinfo -v lists all the available printers and lpinfo -m lists the drivers.
 - To take screenshots, I installed gscreenshot which is a wrapper around scrot. I mapped gscreenshot-cli to the key binding Mod1+Shift+s in my i3 config. Works like a charm.
+- Customizing the touchpad: I found the lack of click on tap quite irritating and turns out it was pretty easy to customize. The tool used by Xorg for this is xinput. If you run the command:
+`xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1`
+the click on tap feature will be enabled. To explore more options try,
+`xinput list-props "SynPS/2 Synaptics TouchPad"`
+I added this command to ~/.config/i3/config for this to happen on startup:
+`exec --no-startup-id xinput set-prop "SynPS/2 Synaptics Touchpad"
+"Synaptics Tap Time" 0`
+I got to know the touchpad device name from running `xinput`.
 
 - Things yet to figure out(Edit: Not anymore. Refer the updates below)
     - To use a new font for i3 or uxrvt in general you'll have to install ttf-<font name> package. I haven't yet figured out how to increase the size of the text in uxrvt. I am clearly missing something.
@@ -46,9 +54,7 @@ was to create a ~/.Xdefaults file with content the same as that of
 ~/.Xresources. So weird... I thought either of these files would do the
 trick.
 
-
-*I am finally content with my working environment. With that I conclude my Arch setup notes. This was fun.*
-
+**Edit**: Just realised I didn't set the special buttons up properly. It is a bit fancy, once you get used to setting everything from the terminal I guess. But would be great to get it working. Looking at you, Dom!
 
 *Nandaja*
 
