@@ -61,3 +61,64 @@ trick.
 *May 11, 2017*
 
 ---
+
+### `ssh`ing behind NATs!
+
+**goal**:
+
+> to be able to `ssh` into each other's computer NO MATTER WHERE WE ARE. Ideally, our computers would run a daemon whenever they wake up that effectively opens them up to the other persons computer automatically.
+
+Until now we've been happily `ssh`ing each other through our own LAN, but now its the real-world and we ain't got no public IPs no mo'. I'm stuck behind RC's and Nandaja somewhere behind some hot and sweaty network in India...
+
+Enter Linus...
+
+[image of linus]()
+
+On some undisclosed island in the middle of the Pacific Ocean we acquired a little server, Linus. Linus, that lucky guy, has a public IP. After many dropped Skype calls, we finally managed to set up a two-way `ssh` tunnel through him. What a guy!
+
+Here is the setup:
+
+```sh
+# For Dom to open up to Nandaja
+dom $ ssh -f -N -R 1770:localhost:22 root@<Linus_pub_IP>
+
+# Now Nandaja can ssh into Dom
+nandaja $ ssh root@<Linus_pub_IP>
+nandaja $ ssh dom@localhost -p 1770
+# OR with only one command:
+nandaja $ ssh -tt root@<Linus_pub_IP> ssh dom@localhost -p 1770
+
+# Now Nandaja opens up to Dom
+nandaja $ ssh -f -N -R 2012:localhost:22 root@<Linus_pub_IP>
+
+# and Dom can ssh into Nandaja
+dom $ ssh root@<Linus_pub_IP>
+dom $ ssh nandaja@localhost -p 2012
+# OR with only one command
+dom $ ssh -tt root@<Linus_pub_IP> ssh nandaja@localhost -p 2012
+```
+
+The setup requires some `ssh` key juggling first:
+```sh
+# All three computers need to have ssh keys (dom, nandaja, root@Linus)
+$ ssh-keygen
+
+# Nandaja and Dom need to give root@Linus their public keys, and Linus needs to give them both its public key as well
+dom $ ssh-copy-id root@<Linus_pub_IP>
+dom $ ssh -f -N -R 1770:localhost:22 root@<Linux_pub_IP>
+root@Linus $ ssh-copy-id dom@localhost -p 1770
+
+nandaja $ ssh-copy-id root@<Linus_pub_IP>
+nandaja $ ssh -f -N -R 2012:localhost:22 root@<Linus_pub_IP>
+root@Linus $ ssh-copy-id nandaja@localhost -p 2012
+```
+
+Let the `ssh`-ing begin!
+
+*Dominic*
+
+*May 16, 2017*
+
+---
+
+
