@@ -3,7 +3,7 @@
 
 - [ ] [Ping file transfer](https://github.com/domspad/icmpb_and_j) nonsense. 
 - [ ] Look into [this IPv4 tunneller](https://github.com/yarrick/iodine), maybe ping file transfer is still possible!
-- [ ] Finishing setting up our SSH tunnel
+- [X] Finishing setting up our SSH tunnel
 - [ ] [Build Your Own Lisp](http://www.buildyourownlisp.com), to learn C by learning Lisp.
 - [ ] Look into [magic wormhole](https://github.com/warner/magic-wormhole)
 - [ ] Learning [Italian](https://www.youtube.com/watch?v=PhlMJ8qkbZg) with Duolingo!
