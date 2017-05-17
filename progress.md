@@ -72,7 +72,7 @@ Until now we've been happily `ssh`ing each other through our own LAN, but now it
 
 Enter Linus...
 
-[image of linus]()
+![linus.png](/assets/linus.png)
 
 On some undisclosed island in the middle of the Pacific Ocean we acquired a little server, Linus. Linus, that lucky guy, has a public IP. After many dropped Skype calls, we finally managed to set up a two-way `ssh` tunnel through him. What a guy!
 
