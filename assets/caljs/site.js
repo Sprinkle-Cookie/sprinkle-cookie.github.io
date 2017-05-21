@@ -12,19 +12,21 @@ var cal_days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 // this is the current date
 var cal_current_date = new Date();
 
-var notThisMonth = 0;
+var current_display_year = ''
+var current_display_month = ''
 
 //Constructor function for Calendar
 function Calendar(month, year) {
   this.month = (isNaN(month) || month == null) ? cal_current_date.getMonth()   : month;
   this.year  = (isNaN(year) || year == null) ? cal_current_date.getFullYear() : year;
-  this.cal_current_date  = cal_current_date;
 
 }
 
 //Generates the needed HTML for the calendar
 Calendar.prototype.generateHTML = function(){
-  date  = this.cal_current_date.getDate();
+  var today  = cal_current_date.getDate();
+  var thisMonth  = cal_current_date.getMonth();
+  var thisYear  = cal_current_date.getFullYear();
 
   // get first day of month
   var firstDay = new Date(this.year, this.month, 1);
@@ -33,6 +35,8 @@ Calendar.prototype.generateHTML = function(){
   // find number of days in month
   var monthLength = cal_days_in_month[this.month];
 
+  current_display_month = this.month;
+  current_display_year = this.year;
   // Compensate for leap year
   if (this.month == 1) { // February only!
     if((this.year % 4 == 0 && this.year % 100 != 0) || this.year % 400 == 0){
@@ -54,11 +58,11 @@ Calendar.prototype.generateHTML = function(){
     for (var j = 0; j <= 6; j++) {
       html += '<td class="day">';
       if (day <= monthLength && (i > 0 || j >= startingDay)) {
-		if (notThisMonth == 0 && day == date) {
+		if (thisMonth == this.month && day == today && thisYear == this.year) {
 			html +='<b style="color:#FF0000";>';
 		}
 		html += day;
-		if ( day == date) {
+		if (thisMonth == this.month && day == today && thisYear == this.year) {
 			html +='</b>';
 		}
         day++;
@@ -85,23 +89,18 @@ Calendar.prototype.drawCalendar = function() {
 //Sets the calendar to previous month
 function prevMonth() {
   //Set the month back by one
-  notThisMonth = 1;
-  month = cal_current_date.getMonth();
-  year = cal_current_date.getFullYear();
-  prevMonth = (month != 0) ? month - 1 : 11;
-  prevYear  = (month != 11) ? year : year - 1;
+  console.log(current_display_month);
+  var prevMonth = (current_display_month != 0) ? current_display_month - 1 : 11;
+  var prevYear  = (current_display_month != 0) ? current_display_year : current_display_year - 1;
   var cal = new Calendar(prevMonth, prevYear);
   cal.drawCalendar();
 }
 
 //Sets the calendar to next month
 function nextMonth() {
-  notThisMonth = 1;
   //Set the month forward by one
-  month = cal_current_date.getMonth();
-  year = cal_current_date.getFullYear();
-  nextMonth = (month != 11) ? month + 1 : 0;
-  nextYear  = (month != 0) ? year : year + 1;
+  var nextMonth = (current_display_month != 11) ? current_display_month + 1 : 0;
+  var nextYear  = (current_display_month != 11) ? current_display_year : current_display_year + 1;
   var cal = new Calendar(nextMonth, nextYear);
   cal.drawCalendar();
 }
