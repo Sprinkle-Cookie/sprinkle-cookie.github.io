@@ -1,0 +1,159 @@
+.cal1{
+	background:#E3E3E3;
+}
+/****/
+thead
+{
+	background: #49BD58;
+}
+tbody{
+ 	background: #DEDEDE;
+  	border-top: 1px solid #ADADAD;
+	border-left: 1px solid #ADADAD;
+}
+tbody a{
+color:#474747;
+}
+/****/
+.clndr{
+	padding:0em 0;
+}
+.noselect {
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+}
+.cal1 .clndr .clndr-controls {
+    position: relative;
+  	color: #FFF;
+	font-size: 1em;
+	font-weight:400;
+	text-transform: uppercase;
+	text-align: center;
+	background: rgb(28,130,64); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(28,130,64,1) 0%, rgba(28,130,64,1) 1%, rgba(34,134,69,1) 3%, rgba(34,134,69,1) 4%, rgba(32,133,64,1) 6%, rgba(32,131,68,1) 13%, rgba(32,130,63,1) 15%, rgba(32,131,66,1) 21%, rgba(29,128,64,1) 32%, rgba(30,129,61,1) 34%, rgba(28,127,63,1) 39%, rgba(28,127,62,1) 49%, rgba(26,125,60,1) 51%, rgba(26,125,60,1) 66%, rgba(25,124,59,1) 71%, rgba(23,122,55,1) 73%, rgba(23,121,55,1) 92%, rgba(19,121,53,1) 95%, rgba(21,123,55,1) 97%, rgba(19,117,53,1) 99%, rgba(19,117,53,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(28,130,64,1)), color-stop(1%,rgba(28,130,64,1)), color-stop(3%,rgba(34,134,69,1)), color-stop(4%,rgba(34,134,69,1)), color-stop(6%,rgba(32,133,64,1)), color-stop(13%,rgba(32,131,68,1)), color-stop(15%,rgba(32,130,63,1)), color-stop(21%,rgba(32,131,66,1)), color-stop(32%,rgba(29,128,64,1)), color-stop(34%,rgba(30,129,61,1)), color-stop(39%,rgba(28,127,63,1)), color-stop(49%,rgba(28,127,62,1)), color-stop(51%,rgba(26,125,60,1)), color-stop(66%,rgba(26,125,60,1)), color-stop(71%,rgba(25,124,59,1)), color-stop(73%,rgba(23,122,55,1)), color-stop(92%,rgba(23,121,55,1)), color-stop(95%,rgba(19,121,53,1)), color-stop(97%,rgba(21,123,55,1)), color-stop(99%,rgba(19,117,53,1)), color-stop(100%,rgba(19,117,53,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(28,130,64,1) 0%,rgba(28,130,64,1) 1%,rgba(34,134,69,1) 3%,rgba(34,134,69,1) 4%,rgba(32,133,64,1) 6%,rgba(32,131,68,1) 13%,rgba(32,130,63,1) 15%,rgba(32,131,66,1) 21%,rgba(29,128,64,1) 32%,rgba(30,129,61,1) 34%,rgba(28,127,63,1) 39%,rgba(28,127,62,1) 49%,rgba(26,125,60,1) 51%,rgba(26,125,60,1) 66%,rgba(25,124,59,1) 71%,rgba(23,122,55,1) 73%,rgba(23,121,55,1) 92%,rgba(19,121,53,1) 95%,rgba(21,123,55,1) 97%,rgba(19,117,53,1) 99%,rgba(19,117,53,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(28,130,64,1) 0%,rgba(28,130,64,1) 1%,rgba(34,134,69,1) 3%,rgba(34,134,69,1) 4%,rgba(32,133,64,1) 6%,rgba(32,131,68,1) 13%,rgba(32,130,63,1) 15%,rgba(32,131,66,1) 21%,rgba(29,128,64,1) 32%,rgba(30,129,61,1) 34%,rgba(28,127,63,1) 39%,rgba(28,127,62,1) 49%,rgba(26,125,60,1) 51%,rgba(26,125,60,1) 66%,rgba(25,124,59,1) 71%,rgba(23,122,55,1) 73%,rgba(23,121,55,1) 92%,rgba(19,121,53,1) 95%,rgba(21,123,55,1) 97%,rgba(19,117,53,1) 99%,rgba(19,117,53,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(28,130,64,1) 0%,rgba(28,130,64,1) 1%,rgba(34,134,69,1) 3%,rgba(34,134,69,1) 4%,rgba(32,133,64,1) 6%,rgba(32,131,68,1) 13%,rgba(32,130,63,1) 15%,rgba(32,131,66,1) 21%,rgba(29,128,64,1) 32%,rgba(30,129,61,1) 34%,rgba(28,127,63,1) 39%,rgba(28,127,62,1) 49%,rgba(26,125,60,1) 51%,rgba(26,125,60,1) 66%,rgba(25,124,59,1) 71%,rgba(23,122,55,1) 73%,rgba(23,121,55,1) 92%,rgba(19,121,53,1) 95%,rgba(21,123,55,1) 97%,rgba(19,117,53,1) 99%,rgba(19,117,53,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(28,130,64,1) 0%,rgba(28,130,64,1) 1%,rgba(34,134,69,1) 3%,rgba(34,134,69,1) 4%,rgba(32,133,64,1) 6%,rgba(32,131,68,1) 13%,rgba(32,130,63,1) 15%,rgba(32,131,66,1) 21%,rgba(29,128,64,1) 32%,rgba(30,129,61,1) 34%,rgba(28,127,63,1) 39%,rgba(28,127,62,1) 49%,rgba(26,125,60,1) 51%,rgba(26,125,60,1) 66%,rgba(25,124,59,1) 71%,rgba(23,122,55,1) 73%,rgba(23,121,55,1) 92%,rgba(19,121,53,1) 95%,rgba(21,123,55,1) 97%,rgba(19,117,53,1) 99%,rgba(19,117,53,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1c8240', endColorstr='#137535',GradientType=0 ); /* IE6-9 */
+}
+.cal1 .clndr .clndr-controls .month {
+  	text-align: center;
+	font-size: 1.1em;
+	padding: 1.1em;
+}
+.cal1 .clndr .clndr-controls .clndr-control-button .clndr-previous-button { 
+  position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 35px;
+	height: 30px;
+	text-indent: -4000px;
+	background: url(../images/left-arrow.png) no-repeat 50%;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	}
+.cal1 .clndr .clndr-controls .clndr-control-button .clndr-previous-button { 
+	float: left;
+	border-right: 1px ridge #0A6127;
+	transition: 0.5s all;
+	-webkit-transition: 0.5s all;
+	-moz-transition: 0.5s all;
+	-o-transition: 0.5s all;
+    padding: 0.99em 0.85em;                                	
+    display:inline-block;
+}
+.cal1 .clndr .clndr-controls .clndr-control-button .clndr-next-button { 
+   	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: 35px;
+	height: 30px;
+	text-indent: -4000px;
+	background: url(../images/right-arrow.png) no-repeat 50%;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+.cal1 .clndr .clndr-controls .clndr-control-button .clndr-next-button { 
+	float: right;
+  	border-left: 1px ridge #0A6127;
+  	transition:0.5s all;
+  	-webkit-transition:0.5s all;
+  	-moz-transition:0.5s all;
+  	-o-transition:0.5s all;
+	display:inline-block;
+	padding:1em;
+}
+.cal1 .clndr:hover .clndr-controls:hover .clndr-control-button:hover .clndr-next-button:hover{
+	background: url(../images/right-arrow.png) no-repeat 50% #187B38;
+}
+.cal1 .clndr:hover .clndr-controls:hover .clndr-control-button:hover .clndr-previous-button:hover{
+	background: url(../images/left-arrow.png) no-repeat 50% #187B38;
+}
+.cal1 .clndr .clndr-table {
+  table-layout: fixed;
+  width:100%;
+  margin:0 auto;
+}
+.cal1 .clndr .clndr-table .header-days {
+   font-size:1em;
+   font-weight:500;
+}
+.cal1 .clndr .clndr-table .header-days .header-day {
+  vertical-align: middle;
+  text-align: center;
+  color: #FFF;
+  border:none;
+  text-shadow: 0.5px 1px 0.8px #C5C5C5;
+}
+.cal1 .clndr .clndr-table tr {
+    height:45px;
+}
+.cal1.clndr-table theade{
+	border:none;
+}
+.cal1 .clndr .clndr-table  td {
+	vertical-align: top;
+	border-top: 1px solid #ADADAD;
+	border-left: 1px solid #ADADAD;
+	text-transform: uppercase;
+	
+}
+.cal1 .clndr .clndr-table tr .day {
+  	width: 100%;
+  	height: inherit;
+ 	color:#2C2C2C;
+ 	vertical-align:middle;
+  	cursor:pointer;
+  	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+}
+.cal1 .clndr .clndr-table tr .day:hover{
+	color: #177A38;
+  	
+}
+.cal1 .clndr .clndr-table tr .day .day-contents {
+	 	box-sizing: border-box;
+		font-size: 1.1em;
+	 	text-align:center;
+	 	cursor:pointer;
+	 	font-weight: 900;
+}
+.cal1 .clndr .clndr-table tr .empty,
+.cal1 .clndr .clndr-table tr .adjacent-month {
+  width: 100%;
+  height: inherit;
+  color:#177A38;
+}
+footer { bottom: 0; color: #707070; left: 200; position: fixed; font-size: small; width:100%;}

@@ -34,12 +34,18 @@
 - Getting a wireless printers working: Packages installed were cups, cups-pdf, avahi, and its dependencies. Once installed start and enable avahi-daemon.service and  org.cups.cupsd.service. Use the web interface at localhost:641 and add a printer and what not. I was using the cups cli and had difficulty connecting to the printer. lpinfo -v lists all the available printers and lpinfo -m lists the drivers.
 - To take screenshots, I installed gscreenshot which is a wrapper around scrot. I mapped gscreenshot-cli to the key binding Mod1+Shift+s in my i3 config. Works like a charm.
 - Customizing the touchpad: I found the lack of click on tap quite irritating and turns out it was pretty easy to customize. The tool used by Xorg for this is xinput. If you run the command:
+
 `xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1`
+
 the click on tap feature will be enabled. To explore more options try,
+
 `xinput list-props "SynPS/2 Synaptics TouchPad"`
+
 I added this command to ~/.config/i3/config for this to happen on startup:
+
 `exec --no-startup-id xinput set-prop "SynPS/2 Synaptics Touchpad"
 "Synaptics Tap Time" 0`
+
 I got to know the touchpad device name from running `xinput`.
 
 - Things yet to figure out(Edit: Not anymore. Refer the updates below)
@@ -72,7 +78,7 @@ Until now we've been happily `ssh`ing each other through our own LAN, but now it
 
 Enter Linus...
 
-![linus.png](/assets/linus.png)
+![linus.png](/assets/images/linus.png)
 
 On some undisclosed island in the middle of the Pacific Ocean we acquired a little server, Linus. Linus, that lucky guy, has a public IP. After many dropped Skype calls, we finally managed to set up a two-way `ssh` tunnel through him. What a guy!
 

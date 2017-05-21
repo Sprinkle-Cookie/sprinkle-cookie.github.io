@@ -1,0 +1,118 @@
+/***
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+***/
+/* reset */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,dl,dt,dd,ol,nav ul,nav li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
+article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {display: block;}
+ol,ul{list-style:none;margin:0px;padding:0px;}
+blockquote,q{quotes:none;}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
+table{border-collapse:collapse;border-spacing:0;}
+/* start editing from here */
+a{text-decoration:none;}
+.txt-rt{text-align:right;}/* text align right */
+.txt-lt{text-align:left;}/* text align left */
+.txt-center{text-align:center;}/* text align center */
+.float-rt{float:right;}/* float right */
+.float-lt{float:left;}/* float left */
+.clear{clear:both;}/* clear float */
+.pos-relative{position:relative;}/* Position Relative */
+.pos-absolute{position:absolute;}/* Position Absolute */
+.vertical-base{	vertical-align:baseline;}/* vertical align baseline */
+.vertical-top{	vertical-align:top;}/* vertical align top */
+nav.vertical ul li{	display:block;}/* vertical menu */
+nav.horizontal ul li{	display: inline-block;}/* horizontal menu */
+img{max-width:100%;}
+/*end reset*/
+body {
+	 font-family: 'Open Sans', sans-serif;
+	 background: url(../images/bg02.png) no-repeat #222222;
+}
+/*----start-content-----*/
+.content{
+	width:370px;
+	min-height:385px;
+	margin: 14% auto 0 auto;
+}
+.call{
+	margin:0 auto;
+	width:30%;
+}
+/*----//end-content-----*/
+/*----start-copy-right-----*/
+.copy-right{
+	text-align: center;
+}
+.copy-right p{
+	color:#FFF;
+	font-size: 0.9em;
+	margin-top: 7em;
+}
+.copy-right p a{
+	color:#49BD58;
+	-webkit-transition: all 0.3s ease-out;
+	-moz-transition: all 0.3s ease-out;
+	-ms-transition: all 0.3s ease-out;
+	-o-transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out;
+}
+.copy-right p a:hover{
+	color:#fff;
+}
+/*----//end-copy-right-----*/
+/*----start-responsive design-----*/
+@media only screen and (max-width:1440px) and (min-width:1366px) {
+	.content{
+	width:370px;
+	min-height:385px;
+	margin: 14% auto 0 auto;
+	}
+}
+@media only screen and (max-width:1366px) and (min-width:1280px) {
+	.content{
+	width:370px;
+	min-height:385px;
+	margin: 14% auto 0 auto;
+	}
+}
+@media only screen and (max-width:1280px) and (min-width:1024px) {
+	.content{
+	width:370px;
+	min-height:385px;
+	margin: 14% auto 0 auto;
+	}
+}
+@media only screen and (max-width:1024px) and (min-width:768px) {
+	.content{
+	width:370px;
+	min-height:385px;
+	margin: 14% auto 0 auto;
+	}
+}
+@media only screen and (max-width:768px) and (min-width:640px) {
+	.content{
+	width:370px;
+	min-height:385px;
+	margin: 14% auto 0 auto;
+	}
+}
+@media only screen and (max-width:640px) and (min-width:480px) {
+	.content{
+	width:370px;
+	min-height:385px;
+	margin: 14% auto 0 auto;
+	}
+}
+@media only screen and (max-width:320px) and (min-width:240px) {
+	.content{
+	width:320px;
+	
+	}
+	.cal1 .clndr .clndr-table .header-days .header-day {
+	font-size:0.95em;
+	}
+}
+/*----//end-responsive design-----*/
