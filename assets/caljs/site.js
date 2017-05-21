@@ -12,16 +12,19 @@ var cal_days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 // this is the current date
 var cal_current_date = new Date();
 
+var notThisMonth = 0;
+
 //Constructor function for Calendar
 function Calendar(month, year) {
   this.month = (isNaN(month) || month == null) ? cal_current_date.getMonth()   : month;
   this.year  = (isNaN(year) || year == null) ? cal_current_date.getFullYear() : year;
-  this.date  = cal_current_date.getDate();
+  this.cal_current_date  = cal_current_date;
 
 }
 
 //Generates the needed HTML for the calendar
 Calendar.prototype.generateHTML = function(){
+  date  = this.cal_current_date.getDate();
 
   // get first day of month
   var firstDay = new Date(this.year, this.month, 1);
@@ -51,11 +54,11 @@ Calendar.prototype.generateHTML = function(){
     for (var j = 0; j <= 6; j++) {
       html += '<td class="day">';
       if (day <= monthLength && (i > 0 || j >= startingDay)) {
-		if (day == this.date) {
+		if (notThisMonth == 0 && day == date) {
 			html +='<b style="color:#FF0000";>';
 		}
 		html += day;
-		if (day == this.date) {
+		if ( day == date) {
 			html +='</b>';
 		}
         day++;
@@ -76,21 +79,29 @@ Calendar.prototype.generateHTML = function(){
 //Writes the calendar to the screen
 Calendar.prototype.drawCalendar = function() {
   //Generates the HTML and write HTML to screen
-  return this.generateHTML();
+  this.generateHTML();
 }
 
 //Sets the calendar to previous month
-Calendar.prototype.prevMonth = function() {
+function prevMonth() {
   //Set the month back by one
-  this.month = (this.month != 0) ? this.month - 1 : 11;
-  this.year  = (this.month != 11) ? this.year : this.year - 1;
-  this.drawCalendar();
+  notThisMonth = 1;
+  month = cal_current_date.getMonth();
+  year = cal_current_date.getFullYear();
+  prevMonth = (month != 0) ? month - 1 : 11;
+  prevYear  = (month != 11) ? year : year - 1;
+  var cal = new Calendar(prevMonth, prevYear);
+  cal.drawCalendar();
 }
 
 //Sets the calendar to next month
-Calendar.prototype.nextMonth = function() {
+function nextMonth() {
+  notThisMonth = 1;
   //Set the month forward by one
-  this.month = (this.month != 11) ? this.month + 1 : 0;
-  this.year  = (this.month != 0) ? this.year : this.year + 1;
-  this.drawCalendar();
+  month = cal_current_date.getMonth();
+  year = cal_current_date.getFullYear();
+  nextMonth = (month != 11) ? month + 1 : 0;
+  nextYear  = (month != 0) ? year : year + 1;
+  var cal = new Calendar(nextMonth, nextYear);
+  cal.drawCalendar();
 }
