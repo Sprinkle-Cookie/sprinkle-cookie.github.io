@@ -51,7 +51,7 @@ Calendar.prototype.generateHTML = function(){
   var diff = (theDayWeMeet - cal_current_date)/1000;
   var diff = Math.abs(Math.floor(diff));
   var weeksLeft = Math.floor(diff/(24*60*60*7));
-  var daysLeft = weeksLeft % 7;
+  var daysLeft = 6 - (weeksLeft % 7);
 
   document.getElementsByClassName("header")[0].innerHTML =  monthName + "&nbsp;" + this.year + " <br><i>We meet in " + weeksLeft + " weeks and " + daysLeft + " days... :-)";
 
