@@ -15,6 +15,7 @@ var cal_current_date = new Date();
 var current_display_year = ''
 var current_display_month = ''
 
+
 //Constructor function for Calendar
 function Calendar(month, year) {
   this.month = (isNaN(month) || month == null) ? cal_current_date.getMonth()   : month;
@@ -43,10 +44,16 @@ Calendar.prototype.generateHTML = function(){
       monthLength = 29;
     }
   }
+  var theDayWeMeet = new Date(2017, 6, 21);
 
   // Fill in month and year for header
   var monthName = cal_months_labels[this.month];
-  document.getElementsByClassName("header")[0].innerHTML =  monthName + "&nbsp;" + this.year;
+  var diff = (theDayWeMeet - cal_current_date)/1000;
+  var diff = Math.abs(Math.floor(diff));
+  var weeksLeft = Math.floor(diff/(24*60*60*7));
+  var daysLeft = weeksLeft % 7;
+
+  document.getElementsByClassName("header")[0].innerHTML =  monthName + "&nbsp;" + this.year + " <br><i>We meet in " + weeksLeft + " weeks and " + daysLeft + " days... :-)";
 
   // fill in the days
   var html = '<table colspan="7"> <tr> <td class="headerdays">Sun</td> <td class="headerdays">Mon</td> <td class="headerdays">Tue</td> <td class="headerdays">Wed</td> <td class="headerdays">Thu</td> <td class="headerdays">Fri</td> <td class="headerdays">Sat</td> </tr>';
