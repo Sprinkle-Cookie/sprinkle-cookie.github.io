@@ -127,4 +127,113 @@ Let the `ssh`-ing begin!
 
 ---
 
+### dissecting linux syscalls with `strace` and patience
 
+We got a soft spot for syscalls. Not sure why -- maybe its the because its like learning to speak the kernel's language. Today we crossed off "`strace` some program" from our bucket list... sortof.
+
+Sortof because we only scratched the surface of syscalls, and realized by the end of our dissection, we only dissected the syscalls that runs at the startup of basically any program! Queue the music:
+
+*the program*: attempts to use the `open` syscall to open a nonexistant file
+```C
+#include<sys/stat.h>
+#include<fcntl.h>
+
+void main(void){
+  int ret = open("nothere.txt", O_RDONLY);
+ return; 
+}
+```
+
+The strace barf:
+```sh
+$ strace a.out
+execve("./a.out", ["./a.out"], [/* 24 vars */]) = 0     
+brk(NULL)                               = 0xf78000
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=110204, ...}) = 0
+mmap(NULL, 110204, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fadae54c000
+close(3)                                = 0
+open("/usr/lib/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0000\6\2\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=1977568, ...}) = 0
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fadae54a000
+mmap(NULL, 3815728, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fadadfa1000
+mprotect(0x7fadae13c000, 2093056, PROT_NONE) = 0
+mmap(0x7fadae33b000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x19a000) = 0x7fadae33b000
+mmap(0x7fadae341000, 14640, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fadae341000
+close(3)                                = 0
+arch_prctl(ARCH_SET_FS, 0x7fadae54b440) = 0
+mprotect(0x7fadae33b000, 16384, PROT_READ) = 0
+mprotect(0x600000, 4096, PROT_READ)     = 0
+mprotect(0x7fadae567000, 4096, PROT_READ) = 0
+munmap(0x7fadae54c000, 110204)          = 0
+open("nothere.txt", O_RDONLY)           = -1 ENOENT (No such file or directory)
+exit_group(-1)                          = ?
++++ exited with 255 +++
+```
+
+*At least 22 syscalls everytime you run a program!* That's 22 times this user program pokes the kernel "would you do this for me?". Talk about needy...
+
+And here's a list of all the unique syscalls made in the course of the is program (in order of first appearance):
+```sh
+execve
+brk
+access
+open
+fstat
+mmap
+close
+read
+mprotect
+arch_prctl
+munmap
+exit_group
+```
+
+After much `man` page hunting (careful! sometimes you need to say the secion of man pages for the command you're looking for -- it might have multiple -- n.b. the secion for syscalls is 2`) we managed a to tease out what the program is doing based on what it is asking the kernel to do. 
+
+First, `execve` is used to replace the current process image with a new image given from an executable file, in this case `a.out`. Note that the many variables not listed in the arguments are actually just the environment variables getting passed to the program. Then, we "bork" some memory space for the new process image (i.e. setting a new "program *break*" for the process, which is the first location after the end of the uninitialized data segment), passing `NULL` just lets the kernel decide how much memory to bork.
+
+Then we get into the *loader*, `ld.so`. First, we try to `access` in the easiest way possible, from some "preloaded" file, but here we fail. So, we do the next best thing and up the file from a "cached" version of it. It is given the file descriptor, 3. `fstat` peaks into the metadata associated with this file in it's inode. We can see it's located on `dev(8, 1)`, which happens to be our main storage device. We can see how big it is, permissions, and whatnot. This information is used to know how much memory to `mmap` (memory-map) for it, in this case, 110204 bytes. We then `close` it up. 
+
+Next we `open` up *`lib.c`*. In this case, we actually `read` the file in (notice it is re-allocated the file descriptor number 3, remember 0, 1, 2 are reserved for standard in, out, and error). The string printed in the call to `read` is the beginning of the file, and we read in here just enough to get the meta-data for the library. Then, we `fstat` it, and `mmap` some space for the rest of the library (two calls here due to different read/write permissions for parts of the library. Further, we `mprotect` some of the library by making sure the process cannot access it (`PROT_NONE`).
+
+Next we `mmap` some space not associated to any particular file (i.e. the file descriptor is `-1`). The call to `arch_prctl` "sets the architecture-specific thread state", in this case setting the 64-bit base for the FS register to the address given. A few more manipulations of read/write priveliges with `mprotect` "sets the architecture-specific thread state", in this case setting the 64-bit base for the FS register to the address given. A few more manipulations of read/write priveliges with `mprotect`, and we wrap up the setup by `munmap`ing the addresses associated with the loader we brought in at the beginning of execution. 
+
+*We begin our program* with `open` and promptly fail (the -1 return code), and throw up our hands with `exit_group` with the given error. Of course, we were expecting this, as `nothere.txt` was a file that didn't exist when the program was run. 
+
+####Epilogue: memory layout of the program
+
+Since much of the `strace` output referenced different memory locations, we wanted to get a better idea of what it meant. So, we recompiled our broken program to have some `-ggdb` symbol table, and `gdb`'d it to break in the midst of running. Then we could look at its memory layout via Unix's beautiful file-interface for it (`/proc/[proc_id]/maps`).
+
+```sh
+$ cat /proc/[proc_id]/maps
+00400000-00401000 r-xp 00000000 08:03 6160791                            /home/domspad/a.out
+00600000-00601000 r--p 00000000 08:03 6160791                            /home/domspad/a.out
+00601000-00602000 rw-p 00001000 08:03 6160791                            /home/domspad/a.out
+7ffff7a36000-7ffff7bd1000 r-xp 00000000 08:01 395388                     /usr/lib/libc-2.25.so
+7ffff7bd1000-7ffff7dd0000 ---p 0019b000 08:01 395388                     /usr/lib/libc-2.25.so
+7ffff7dd0000-7ffff7dd4000 r--p 0019a000 08:01 395388                     /usr/lib/libc-2.25.so
+7ffff7dd4000-7ffff7dd6000 rw-p 0019e000 08:01 395388                     /usr/lib/libc-2.25.so
+7ffff7dd6000-7ffff7dda000 rw-p 00000000 00:00 0 
+7ffff7dda000-7ffff7dfd000 r-xp 00000000 08:01 395389                     /usr/lib/ld-2.25.so
+7ffff7fd9000-7ffff7fdb000 rw-p 00000000 00:00 0 
+7ffff7ff8000-7ffff7ffa000 r--p 00000000 00:00 0                          [vvar]
+7ffff7ffa000-7ffff7ffc000 r-xp 00000000 00:00 0                          [vdso]
+7ffff7ffc000-7ffff7ffd000 r--p 00022000 08:01 395389                     /usr/lib/ld-2.25.so
+7ffff7ffd000-7ffff7ffe000 rw-p 00023000 08:01 395389                     /usr/lib/ld-2.25.so
+7ffff7ffe000-7ffff7fff000 rw-p 00000000 00:00 0 
+7ffffffde000-7ffffffff000 rw-p 00000000 00:00 0                          [stack]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+```
+
+It's up to the reader to estimate the references in the syscalls to memory addresses with the memory layout seen here. This is where the patience is necessary...  
+
+Another 4-hour skype, another day...
+
+*Dominic*
+
+*May 21, 2017*
+
+---
