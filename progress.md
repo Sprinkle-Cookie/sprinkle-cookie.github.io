@@ -68,6 +68,8 @@ trick.
 
 ---
 
+![ssh pranking](/assets/images/arewedoingthis.png)
+
 ### `ssh`ing behind NATs!
 
 **goal**:
@@ -126,6 +128,8 @@ Let the `ssh`-ing begin!
 *May 16, 2017*
 
 ---
+
+![serious face](/assets/images/strace.png)
 
 ### Dissecting linux syscalls with `strace` and patience
 
