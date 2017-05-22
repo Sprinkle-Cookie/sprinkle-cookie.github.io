@@ -11,7 +11,7 @@
 - [ ] [Write a Shell in C](https://brennan.io/2015/01/16/write-a-shell-in-c/) or SOME sort of shell, to incorporate into [yehos](https://github.com/zormit/yehos)
 - [ ] A Vim plugin where if you press a certain key combination, it shuffles the letters of the word that the cursor on.
 - [ ] Explore something in Haskell (inspired by Iain's grand dream of side-effectless world).
-- [ ] Dude, let's `strace` something.
+- [X] Dude, let's `strace` something.
 - [ ] Something crazy using a [unikernel](https://mirage.io), like utilizing each individual core on a [96-core](https://www.packet.net/bare-metal/) system to run a small operating system+program.
 
 ### And some good reads...
