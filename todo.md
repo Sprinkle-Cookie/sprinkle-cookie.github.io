@@ -13,6 +13,7 @@
 - [ ] Explore something in Haskell (inspired by Iain's grand dream of side-effectless world).
 - [X] Dude, let's `strace` something.
 - [ ] Something crazy using a [unikernel](https://mirage.io), like utilizing each individual core on a [96-core](https://www.packet.net/bare-metal/) system to run a small operating system+program.
+- [ ] Why do new computers have trouble generating entropy?! Let's figure out something better than keyboard-bashing...
 
 ### And some good reads...
 
