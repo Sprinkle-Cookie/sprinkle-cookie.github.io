@@ -50,8 +50,9 @@ Calendar.prototype.generateHTML = function(){
   var monthName = cal_months_labels[this.month];
   var diff = (theDayWeMeet - cal_current_date)/1000;
   var diff = Math.abs(Math.floor(diff));
-  var weeksLeft = Math.floor(diff/(24*60*60*7));
-  var daysLeft = 6 - (weeksLeft % 7);
+  var weeks = diff/(24*60*60*7);
+  var weeksLeft =  Math.floor(weeks);
+  var daysLeft = Math.floor(weeks % 7);
 
   document.getElementsByClassName("header")[0].innerHTML =  monthName + "&nbsp;" + this.year + " <br><i>We meet in " + weeksLeft + " weeks and " + daysLeft + " days... :-)";
 
@@ -65,11 +66,17 @@ Calendar.prototype.generateHTML = function(){
     for (var j = 0; j <= 6; j++) {
       html += '<td class="day">';
       if (day <= monthLength && (i > 0 || j >= startingDay)) {
+		if (theDayWeMeet.getMonth() == this.month && theDayWeMeet.getDate() == day && theDayWeMeet.getFullYear() == this.year) {
+			html +='<b class="numberCircle";>';
+		}
 		if (thisMonth == this.month && day == today && thisYear == this.year) {
 			html +='<b style="color:#FF0000";>';
 		}
 		html += day;
 		if (thisMonth == this.month && day == today && thisYear == this.year) {
+			html +='</b>';
+		}
+		if (theDayWeMeet.getMonth() == this.month && theDayWeMeet.getDate() == today && theDayWeMeet.getFullYear() == this.year) {
 			html +='</b>';
 		}
         day++;
@@ -96,7 +103,6 @@ Calendar.prototype.drawCalendar = function() {
 //Sets the calendar to previous month
 function prevMonth() {
   //Set the month back by one
-  console.log(current_display_month);
   var prevMonth = (current_display_month != 0) ? current_display_month - 1 : 11;
   var prevYear  = (current_display_month != 0) ? current_display_year : current_display_year - 1;
   var cal = new Calendar(prevMonth, prevYear);
