@@ -52,7 +52,7 @@ Calendar.prototype.generateHTML = function(){
   var diff = Math.abs(Math.floor(diff));
   var weeks = diff/(24*60*60*7);
   var weeksLeft =  Math.floor(weeks);
-  var daysLeft = Math.floor(weeks % 7);
+  var daysLeft = Math.floor((weeks % 1)*10);
 
   document.getElementsByClassName("header")[0].innerHTML =  monthName + "&nbsp;" + this.year + " <br><i>We meet in " + weeksLeft + " weeks and " + daysLeft + " days... :-)";
 
