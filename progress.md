@@ -249,3 +249,13 @@ Another 4-hour skype, another day...
 *May 21, 2017*
 
 ---
+![aphrodesiac?](/assets/images/garlic_man.png)
+
+### GARLIC
+
+Some say garlic is an aphrodesiac. I'd like to believe that.
+
+*Dominic*
+
+*June 6, 2017*
+
