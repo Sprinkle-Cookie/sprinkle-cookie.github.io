@@ -1,7 +1,7 @@
 ## All the ingredients
 
 
-- [ ] [Ping file transfer](https://github.com/domspad/icmpb_and_j) nonsense.
+- [X] [Ping file transfer](https://github.com/domspad/icmpb_and_j) nonsense.
 - [ ] Look into [this IPv4 tunneller](https://github.com/yarrick/iodine), maybe ping file transfer is still possible!
 - [X] Finishing setting up our SSH tunnel
 - [ ] [Build Your Own Lisp](http://www.buildyourownlisp.com), to learn C by learning Lisp.
@@ -15,6 +15,7 @@
 - [ ] Something crazy using a [unikernel](https://mirage.io), like utilizing each individual core on a [96-core](https://www.packet.net/bare-metal/) system to run a small operating system+program.
 - [ ] Why do new computers have trouble generating entropy?! Let's figure out something better than keyboard-bashing...
 - [ ] Will you be my [crytopal](https://cryptopals.com/)?
+- [ ] base128 encode at the command line.
 
 ### And some good reads...
 
