@@ -144,14 +144,14 @@ Sortof because we only scratched the surface of syscalls, and realized by the en
 
 void main(void){
   int ret = open("nothere.txt", O_RDONLY);
- return; 
+ return;
 }
 ```
 
 The strace barf:
 ```sh
 $ strace a.out
-execve("./a.out", ["./a.out"], [/* 24 vars */]) = 0     
+execve("./a.out", ["./a.out"], [/* 24 vars */]) = 0
 brk(NULL)                               = 0xf78000
 access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
@@ -195,25 +195,25 @@ munmap
 exit_group
 ```
 
-After much `man` page hunting (careful! sometimes you need to say the secion of man pages for the command you're looking for -- it might have multiple -- n.b. the secion for syscalls is 2`) we managed a to tease out what the program is doing based on what it is asking the kernel to do. 
+After much `man` page hunting (careful! sometimes you need to say the secion of man pages for the command you're looking for -- it might have multiple -- n.b. the secion for syscalls is 2`) we managed a to tease out what the program is doing based on what it is asking the kernel to do.
 
 ** Replacing the current image process **
 
 First, `execve` is used to replace the current process image with a new image given from an executable file, in this case `a.out`. Note that the many variables not listed in the arguments are actually just the environment variables getting passed to the program. Then, we "bork" some memory space for the new process image (i.e. setting a new "program *break*" for the process, which is the first location after the end of the uninitialized data segment), passing `NULL` just lets the kernel decide how much memory to bork.
 
-** Pulling in the loader ** 
+** Pulling in the loader **
 
-Then we get into the *loader*, `ld.so`. First, we try to `access` in the easiest way possible, from some "preloaded" file, but here we fail. So, we do the next best thing and up the file from a "cached" version of it. It is given the file descriptor, 3. `fstat` peaks into the metadata associated with this file in it's inode. We can see it's located on `dev(8, 1)`, which happens to be our main storage device. We can see how big it is, permissions, and whatnot. This information is used to know how much memory to `mmap` (memory-map) for it, in this case, 110204 bytes. We then `close` it up. 
+Then we get into the *loader*, `ld.so`. First, we try to `access` in the easiest way possible, from some "preloaded" file, but here we fail. So, we do the next best thing and up the file from a "cached" version of it. It is given the file descriptor, 3. `fstat` peaks into the metadata associated with this file in it's inode. We can see it's located on `dev(8, 1)`, which happens to be our main storage device. We can see how big it is, permissions, and whatnot. This information is used to know how much memory to `mmap` (memory-map) for it, in this case, 110204 bytes. We then `close` it up.
 
 ** Pulling in lib.c **
 
 Next we `open` up *`lib.c`*. In this case, we actually `read` the file in (notice it is re-allocated the file descriptor number 3, remember 0, 1, 2 are reserved for standard in, out, and error). The string printed in the call to `read` is the beginning of the file, and we read in here just enough to get the meta-data for the library. Then, we `fstat` it, and `mmap` some space for the rest of the library (two calls here due to different read/write permissions for parts of the library. Further, we `mprotect` some of the library by making sure the process cannot access it (`PROT_NONE`).
 
-Next we `mmap` some space not associated to any particular file (i.e. the file descriptor is `-1`). The call to `arch_prctl` "sets the architecture-specific thread state", in this case setting the 64-bit base for the FS register to the address given. A few more manipulations of read/write priveliges with `mprotect` "sets the architecture-specific thread state", in this case setting the 64-bit base for the FS register to the address given. A few more manipulations of read/write priveliges with `mprotect`, and we wrap up the setup by `munmap`ing the addresses associated with the loader we brought in at the beginning of execution. 
+Next we `mmap` some space not associated to any particular file (i.e. the file descriptor is `-1`). The call to `arch_prctl` "sets the architecture-specific thread state", in this case setting the 64-bit base for the FS register to the address given. A few more manipulations of read/write priveliges with `mprotect` "sets the architecture-specific thread state", in this case setting the 64-bit base for the FS register to the address given. A few more manipulations of read/write priveliges with `mprotect`, and we wrap up the setup by `munmap`ing the addresses associated with the loader we brought in at the beginning of execution.
 
 ** Actually starting our program **
 
-*We begin our program* with `open` and promptly fail (the -1 return code), and throw up our hands with `exit_group` with the given error. Of course, we were expecting this, as `nothere.txt` was a file that didn't exist when the program was run. 
+*We begin our program* with `open` and promptly fail (the -1 return code), and throw up our hands with `exit_group` with the given error. Of course, we were expecting this, as `nothere.txt` was a file that didn't exist when the program was run.
 
 #### Epilogue: memory layout of the program
 
@@ -228,19 +228,19 @@ $ cat /proc/[proc_id]/maps
 7ffff7bd1000-7ffff7dd0000 ---p 0019b000 08:01 395388                     /usr/lib/libc-2.25.so
 7ffff7dd0000-7ffff7dd4000 r--p 0019a000 08:01 395388                     /usr/lib/libc-2.25.so
 7ffff7dd4000-7ffff7dd6000 rw-p 0019e000 08:01 395388                     /usr/lib/libc-2.25.so
-7ffff7dd6000-7ffff7dda000 rw-p 00000000 00:00 0 
+7ffff7dd6000-7ffff7dda000 rw-p 00000000 00:00 0
 7ffff7dda000-7ffff7dfd000 r-xp 00000000 08:01 395389                     /usr/lib/ld-2.25.so
-7ffff7fd9000-7ffff7fdb000 rw-p 00000000 00:00 0 
+7ffff7fd9000-7ffff7fdb000 rw-p 00000000 00:00 0
 7ffff7ff8000-7ffff7ffa000 r--p 00000000 00:00 0                          [vvar]
 7ffff7ffa000-7ffff7ffc000 r-xp 00000000 00:00 0                          [vdso]
 7ffff7ffc000-7ffff7ffd000 r--p 00022000 08:01 395389                     /usr/lib/ld-2.25.so
 7ffff7ffd000-7ffff7ffe000 rw-p 00023000 08:01 395389                     /usr/lib/ld-2.25.so
-7ffff7ffe000-7ffff7fff000 rw-p 00000000 00:00 0 
+7ffff7ffe000-7ffff7fff000 rw-p 00000000 00:00 0
 7ffffffde000-7ffffffff000 rw-p 00000000 00:00 0                          [stack]
 ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
 ```
 
-It's up to the reader to estimate the references in the syscalls to memory addresses with the memory layout seen here. This is where the patience is necessary...  
+It's up to the reader to estimate the references in the syscalls to memory addresses with the memory layout seen here. This is where the patience is necessary...
 
 Another 4-hour skype, another day...
 
@@ -259,3 +259,11 @@ Some say garlic is an aphrodesiac. I'd like to believe that.
 
 *June 6, 2017*
 
+
+---
+
+
+### Finally, some RC-ers were fortunate enough to watch ICMPB_and_J in action
+
+
+> TODO: Make notes on the presentation
