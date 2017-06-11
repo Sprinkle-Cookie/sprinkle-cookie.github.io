@@ -259,11 +259,20 @@ Some say garlic is an aphrodesiac. I'd like to believe that.
 
 *June 6, 2017*
 
+UPDATE: I haven't seen my garlic man for over a month! Can you believe that?!
+
+*Nandaja*
+
+*June 11, 2017*
+
 
 ---
 
 
 ### Finally, some RC-ers were fortunate enough to watch ICMPB_and_J in action
 
-
 > TODO: Make notes on the presentation
+
+*Nandaja*
+
+*June 11, 2017*
