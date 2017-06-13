@@ -2,7 +2,7 @@
 
 
 - [X] [Ping file transfer](https://github.com/domspad/icmpb_and_j) nonsense.
-- [ ] Look into [this IPv4 tunneller](https://github.com/yarrick/iodine), maybe ping file transfer is still possible!
+- [X] Look into [this IPv4 tunneller](https://github.com/yarrick/iodine), maybe ping file transfer is still possible!
 - [X] Finishing setting up our SSH tunnel
 - [ ] [Build Your Own Lisp](http://www.buildyourownlisp.com), to learn C by learning Lisp.
 - [ ] Look into [magic wormhole](https://github.com/warner/magic-wormhole)
@@ -16,6 +16,7 @@
 - [ ] Why do new computers have trouble generating entropy?! Let's figure out something better than keyboard-bashing...
 - [ ] Will you be my [crytopal](https://cryptopals.com/)?
 - [ ] base128 encode at the command line.
+- [ ] A firefox extension that will synchronize browsing sessions!
 
 ### And some good reads...
 
