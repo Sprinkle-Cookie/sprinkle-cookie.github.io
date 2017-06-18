@@ -44,7 +44,7 @@ Calendar.prototype.generateHTML = function(){
       monthLength = 29;
     }
   }
-  var theDayWeMeet = new Date(2017, 6, 21);
+  var theDayWeMeet = new Date(2017, 6, 24);
 
   // Fill in month and year for header
   var monthName = cal_months_labels[this.month];
@@ -52,7 +52,6 @@ Calendar.prototype.generateHTML = function(){
   var diff = Math.abs(Math.floor(diff));
   var weeks = diff/(24*60*60*7);
   var weeksLeft =  Math.floor(weeks);
-  console.log(weeks);
   var daysLeft = Math.floor((weeks % 1)*0.7*10);
 
   document.getElementsByClassName("header")[0].innerHTML =  monthName + "&nbsp;" + this.year + " <br><i>We meet in " + weeksLeft + " weeks and " + daysLeft + " days... :-)";
