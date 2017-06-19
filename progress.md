@@ -273,6 +273,109 @@ UPDATE: I haven't seen my garlic man for over a month! Can you believe that?!
 
 > TODO: Make notes on the presentation
 
+An amazing week happened! We made our ICMP chat functional spending long
+hours working on it for a week. Even Jitsi gave up hope at one point,
+but we didn't...
+
+This wouldn't have been possible without:
+* Linus! One sweet fella...
+* [Iodine](http://code.kryo.se/iodine/). We don't know how it works completely, but that was
+  least of our problems the past week.
+
+
+Honorable mentions:
+* Garlic man
+* TMUX and Vim, of course. You can always count on those two...
+  (Although, this time we had some issues with tmux when we were
+SSH-ing. SSH-ing with X11 forwarding isn't working really well with
+tmux. So we had to disable tmux on shell start option)
+* [beep](https://linux.die.net/man/1/beep)
+* All the amazing man pages
+* All the cookies that kept domspad's spirit up
+* The bean bag that supported me day and night to work &amp; sleep peacefully(in New York
+  time).
+
+Not-so-proud-to-admit mentions:
+* Whatsapp and Skype
+
+
+We started where we left off on my last week in NYC. One liner
+messages(text messages with repeated occurrence of the word
+TICKLE, for example)
+weren't even getting sent across the DNS tunnel iodine created via
+Linus for our poor separated-by-NAT archies. `tcpdump` came to the rescue and as it turned out we were just
+using the interface name wrong in our ICMP_chat script. We made
+`tcmpdump` listen to the `dns0` interface that iodine created for us and the packets were actually getting through.
+
+
+We were having trouble filtering out the chat messages from the rest of
+the ICMP crap that gets to your network. So we decided to monkey-patch
+the icmphdr struct. We added a new attribute(aptly named `peanuts`),
+which was set to 2 if it is an ICMPB_and_J packet and from that
+point on, we were unstoppable. Even after this monkey-patch workaround,
+icmp_chat was having trouble getting the message. Our diagnosis of the
+problem at that time was that, since we were using some gibberish as
+checksum, the router probably was rejecting the packets. So we found
+this code online that created checksums for ICMP packets according to
+the RFC standards and used it. And all our miseries came to an
+end...(Although, at a later point the tcpdump again kept showing the
+same `Wrong checksum` error and it continued working. It still remains a
+mystery...).
+
+
+Okay, so now sending one liners were easy... We had to send each other
+text files and then images! We decided earlier to send across base64
+encoded values of the contents of a file. Now came the biggest problem.
+The ICMP protocol fragments the file into multiple packets because the
+maximum size a packet can hold is 1100 bytes. Now how would icmp_chat
+know how many packets to expect? We again monkey-patched the structure.
+We added the attributes total_pkts and num_pkt to the struct. So the
+icmp_shooter would update the total_pkts based on the file size
+initially. On each packet shooting, the num_pkt would be incremented by
+one. The icmp_chat keep receiving until the num_pkt is equal to
+total_pkts. That was pretty much the last hiccup we had with our chat
+scripts actually. We were even able to send small sized images across,
+although it took a while.  We even added a filename attribute to the
+struct to save the file by the same name at the receiving end.
+
+As an added bonus, we printed out an 'audible
+bell' binary once the icmp_shooter completes shooting and the icmp_chat
+completes receiving. It sounded like the most beautiful sound in the
+world until it became very irritating.
+
+
+So we did all that, and now we had to present it! This was the coolest
+thing we ever did together and Dom was at RC presenting it in front of
+all the RC-ers while I was sitting at the comforts of someone else's
+home in Bangalore just making beep noises...
+
+
+Linus got cold feet and started messing up our DNS tunnel. We had
+moments of panic before the presentation. We had to keep restarting the
+iodine a couple of times until it became somewhat stable right before
+the presentation started. The commands we ran to send and receive the
+image file was:
+
+sender side:
+
+`base64 garlic_man.png > garlic_man.txt`
+
+`sudo icmp_shooter garlic_man.txt`
+
+*BAMMMMM*
+*BEEP*
+
+receiver side:
+
+`sudo icmp_chat`
+
+*BEEP*
+
+`base64 -d garlic_man.txt > garlic_man.png`
+
+And that concludes our struggle to ping each other files... It was quite
+a ride.
+
 *Nandaja*
 
 *June 11, 2017*
