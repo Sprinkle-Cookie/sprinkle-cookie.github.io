@@ -308,12 +308,7 @@ using the interface name wrong in our ICMP_chat script. We made
 `tcmpdump` listen to the `dns0` interface that iodine created for us and the packets were actually getting through.
 
 
-We were having trouble filtering out the chat messages from the rest of
-the ICMP crap that gets to your network. So we decided to monkey-patch
-the icmphdr struct. We added a new attribute(aptly named `peanuts`),
-which was set to 2 if it is an ICMPB_and_J packet and from that
-point on, we were unstoppable. Even after this monkey-patch workaround,
-icmp_chat was having trouble getting the message. Our diagnosis of the
+icmp_chat was still having trouble getting the message. Our diagnosis of the
 problem at that time was that, since we were using some gibberish as
 checksum, the router probably was rejecting the packets. So we found
 this code online that created checksums for ICMP packets according to
@@ -323,24 +318,32 @@ same `Wrong checksum` error and it continued working. It still remains a
 mystery...).
 
 
+Now the problem was how to filter out the chat messages from the rest of
+the ICMP crap that got to the network. So we decided to monkey-patch
+the icmphdr struct. We added a new attribute(aptly named `peanuts`),
+which was set to 2 if it is an ICMPB_and_J packet and from that
+point on, we were unstoppable.
+
+
 Okay, so now sending one liners were easy... We had to send each other
 text files and then images! We decided earlier to send across base64
 encoded values of the contents of a file. Now came the biggest problem.
 The ICMP protocol fragments the file into multiple packets because the
 maximum size a packet can hold is 1100 bytes. Now how would icmp_chat
-know how many packets to expect? We again monkey-patched the structure.
+know how many packets to expect? We again monkey-patched the struct.
 We added the attributes total_pkts and num_pkt to the struct. So the
 icmp_shooter would update the total_pkts based on the file size
 initially. On each packet shooting, the num_pkt would be incremented by
 one. The icmp_chat keep receiving until the num_pkt is equal to
 total_pkts. That was pretty much the last hiccup we had with our chat
-scripts actually. We were even able to send small sized images across,
-although it took a while.  We even added a filename attribute to the
+scripts. We were even able to send small sized images across,
+although it took a while.  We added a filename attribute to the
 struct to save the file by the same name at the receiving end.
 
-As an added bonus, we printed out an 'audible
-bell' binary once the icmp_shooter completes shooting and the icmp_chat
-completes receiving. It sounded like the most beautiful sound in the
+
+As a bonus, we printed out an 'audible
+bell' binary once the icmp_shooter completed shooting and the icmp_chat
+completed receiving. It sounded like the most beautiful sound in the
 world until it became very irritating.
 
 
@@ -374,8 +377,11 @@ receiver side:
 `base64 -d garlic_man.txt > garlic_man.png`
 
 And that concludes our struggle to ping each other files... It was quite
-a ride.
+a ride. Now we can proudly say this about our icmp_chat - *Se non ci
+fossi dovrei inventarti...*
 
+
+Grazzie per tutto il pesci... Ciao!
 *Nandaja*
 
 *June 11, 2017*
