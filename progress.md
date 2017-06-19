@@ -269,9 +269,10 @@ UPDATE: I haven't seen my garlic man for over a month! Can you believe that?!
 ---
 
 
+
 ### Finally, some RC-ers were fortunate enough to watch ICMPB_and_J in action
 
-> TODO: Make notes on the presentation
+
 
 An amazing week happened! We made our ICMP chat functional spending long
 hours working on it for a week. Even Jitsi gave up hope at one point,
@@ -336,9 +337,13 @@ icmp_shooter would update the total_pkts based on the file size
 initially. On each packet shooting, the num_pkt would be incremented by
 one. The icmp_chat keep receiving until the num_pkt is equal to
 total_pkts. That was pretty much the last hiccup we had with our chat
-scripts. We were even able to send small sized images across,
-although it took a while.  We added a filename attribute to the
-struct to save the file by the same name at the receiving end.
+scripts. We added a filename attribute to the
+struct to save the file by the same name at the receiving end. We were even able to send small sized images across,
+although it took a while. In fact this is one of the first images that
+got through.
+
+
+![what a surprise...](/assets/images/sprinkle_cookie.png)
 
 
 As a bonus, we printed out an 'audible
@@ -382,6 +387,8 @@ fossi dovrei inventarti...*
 
 
 Grazzie per tutto il pesci... Ciao!
+
+
 *Nandaja*
 
 *June 11, 2017*
