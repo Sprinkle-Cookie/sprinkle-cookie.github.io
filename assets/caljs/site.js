@@ -54,7 +54,7 @@ Calendar.prototype.generateHTML = function(){
   var weeksLeft =  Math.floor(weeks);
   var daysLeft = Math.floor((weeks % 1)*0.7*10);
 
-  document.getElementsByClassName("header")[0].innerHTML =  monthName + "&nbsp;" + this.year + " <br><i>We meet in " + weeksLeft + " weeks and " + daysLeft + " days... :-)";
+  document.getElementsByClassName("header")[0].innerHTML =  monthName + "&nbsp;" + this.year + " <br><i>We meet in August... :-)";
 
   // fill in the days
   var html = '<table colspan="7"> <tr> <td class="headerdays">Sun</td> <td class="headerdays">Mon</td> <td class="headerdays">Tue</td> <td class="headerdays">Wed</td> <td class="headerdays">Thu</td> <td class="headerdays">Fri</td> <td class="headerdays">Sat</td> </tr>';
@@ -66,19 +66,14 @@ Calendar.prototype.generateHTML = function(){
     for (var j = 0; j <= 6; j++) {
       html += '<td class="day">';
       if (day <= monthLength && (i > 0 || j >= startingDay)) {
-		if (theDayWeMeet.getMonth() == this.month && theDayWeMeet.getDate() == day && theDayWeMeet.getFullYear() == this.year) {
-			html +='<b class="numberCircle";>';
-		}
-		if (thisMonth == this.month && day == today && thisYear == this.year) {
-			html +='<b style="color:#FF0000";>';
-		}
-		html += day;
-		if (thisMonth == this.month && day == today && thisYear == this.year) {
-			html +='</b>';
-		}
-		if (theDayWeMeet.getMonth() == this.month && theDayWeMeet.getDate() == today && theDayWeMeet.getFullYear() == this.year) {
-			html +='</b>';
-		}
+        if (thisMonth == this.month && day == today && thisYear == this.year) {
+                html +='<b style="color:#FF0000";>';
+        }
+        html += day;
+        if (thisMonth == this.month && day == today && thisYear == this.year) {
+                html +='</b>';
+        }
+
         day++;
       }
       html += '</td>';
