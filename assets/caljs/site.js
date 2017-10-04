@@ -44,7 +44,7 @@ Calendar.prototype.generateHTML = function(){
       monthLength = 29;
     }
   }
-  var theDayWeMeet = new Date(2017, 9, 27);
+  var theDayWeMeet = new Date(2017, 9, 28);
 
   // Fill in month and year for header
   var monthName = cal_months_labels[this.month];
@@ -66,7 +66,7 @@ Calendar.prototype.generateHTML = function(){
     for (var j = 0; j <= 6; j++) {
       html += '<td class="day">';
       if (day <= monthLength && (i > 0 || j >= startingDay)) {
-          if (theDayWeMeet.getMonth() == this.month && theDayWeMeet.getDate() == day && theDayWeMeet.getFullYear() == this.year) {
+          if (theDayWeMeet.getMonth() == this.month && theDayWeMeet.getDate() == day + 1 && theDayWeMeet.getFullYear() == this.year) {
             html +='<b class="numberCircle";>';
           }
           if (thisMonth == this.month && day == today && thisYear == this.year) {
