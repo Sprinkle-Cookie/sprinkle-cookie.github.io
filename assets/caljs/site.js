@@ -44,7 +44,7 @@ Calendar.prototype.generateHTML = function(){
       monthLength = 29;
     }
   }
-  var theDayWeMeet = new Date(2017, 11, 20);
+  var theDayWeMeet = new Date(2017, 12, 18);
 
   // Fill in month and year for header
   var monthName = cal_months_labels[this.month];
